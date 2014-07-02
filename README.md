@@ -11,15 +11,6 @@ be posted to this repo's wiki.
 
 ##Chapter 1 - Introduction
 
-###Game Engine Core Components
-* rendering engine and camera
-* collision and physics engine
-* player interaction
-* animation system
-* game world object model
-* artificial intelligence
-* audio system
-
 ###Structure of Game Development Team
 
 #####Engineers
@@ -48,3 +39,52 @@ dev ops for managing large server clusters.
 
 #####Publishers
 Market, manufacture, and distribute game to audiences.
+
+
+###What is a Game Engine?
+A game engine is a software development kit that allows programmers
+to reuse and modify aspects of a game in a similar genre. Game engines
+hide the underlying communication to hardware and graphics cards, and
+provide an API to abstract away many difficult low-level tasks.
+
+
+###Popular Video Game Genre
+* first person shooters (FPS)
+* real-time strategy (RTS)
+* massively multiplayer online (MMO)
+* platformers
+* fighting
+* racing
+* sandbox
+* role-playing
+* science-fiction
+* adventure
+* sports
+* simulation
+* puzzle
+* god mode building
+* card & board games
+
+
+###Runtime Engine Architecture
+* hardware
+* device drivers
+* operating system
+* SDK and middleware
+* data structure and algorithms
+* graphics rendering
+* collision and physics
+* character and object animation
+* artificial intelligence
+* character and entity models
+* platform independence layer
+* core system utilities
+* resource management
+* optimizations
+* visual effects
+* front-end display
+* human interface device controls
+* audio and music
+* online and networking
+* event system and handler
+* artificial intelligence
