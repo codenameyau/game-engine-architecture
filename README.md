@@ -81,3 +81,54 @@ Direction is the direction of your thumb in right hand rule.
 
 
 ####Linear Interpolation of Points and Vectors
+Linear interpolation is a mathematical operation that approximates
+the value of a unknown point in between neighboring points using a line.
+Spline interpolation is a technique used to interpolate points
+using a piece-wise polynomial, and can be used for curve fitting.
+
+
+###Matrices
+A matrix is a set of one or more vectors with a dimension of 'n' rows
+and 'm' columns. A square matrix is special type of matrix where
+the number of rows is the same as the number of columns. Matrices
+are widely used to store data and perform operations that manipulate
+that data, and are perfered by GPUs because matrices allow for efficient
+parrallel operations and computation.
+
+####Matrix Topics
+* scalor multiplication
+* matrix multiplication
+* row and column-wise order
+* the identity matrix
+* triangular and diagonal matrices
+* transposition and symmetry
+* inverse matrix and determinants
+* linear independence and combinations
+* matrix transformations
+* sparse matrices
+
+
+###Quaternions
+Quaternions are used for 3D rotations because round-off floating point
+error occurs when using a matrix for calculating rotations. Yaw, pitch,
+and roll are ways to think about the rotation of a 3D object.
+
+This area should be expanded.
+
+###Graphics Card SIMD
+Single Instruction Multiple Data allows parallel computation of a signle
+instruction with mutitple data. For example, this means your GPU can perform
+the four different add operations with different data sets simultaneously.
+
+Use SSE intrinsics, which is a API `#include <xmmintrin.h>` that lets you
+code in `c` rather using inline assembly.
+
+
+###Random Number Generator
+Algorithms used to generate pseudo random numbers.
+
+* Linear Congruential Generators
+* Mersenne Twister
+* Mother-Of-All
+* Xorshift
+
