@@ -4,7 +4,7 @@ game-engine-architecture
 Learning how to design 3D game engines from the book
 *Game Engine Architecture* by Jason Gregory.
 
-This README will contain updates and notes as I learn along and
+This repository contains updates and notes as I learn along and
 code my own examples. After each chapter, these notes will
 be moved to this repo's wiki.
 
@@ -16,119 +16,43 @@ hide the underlying communication to hardware and graphics cards, and
 provide APIs to abstract away many difficult or common low-level tasks.
 
 
+##Engine Support System
 
-##Mathematics
-A game is a mathematical model of a virtual world simulated in real-time.
-Nearly all of applications of mathematics are used including algebra, geometry,
-trigonometry, calculus, and linear algebra. Linear algebra is the most heavily
-used underlying concept especially with the use of vectors and matrices.
+###Startup and Shutdown
+We want to startup subsystem in a specific order, and shutdown in the reverse order.
+Since constructors and destructors are called in an unpredictable order, a custom system
+is required.
 
-###Points and Vectors
-In the 3D-Cartesian coordinate system, a point 'P' has a position
-called (x, y, z). The x-axis is defined as left to right on the horizontal axis;
-the y-axis is defined as bottom to top as the vertical axis; and the z-axis
-is defined as out to in, or further to closer, as the depth axis.
+One major design pattern is to define a **singleton class** for each subsystem.
+However this design does not allow us to destroy objects in a specific order.
 
-A vector is a line that has a magnitude and a direction. The magnitude is the
-length of the vector, and the direction is where the vector points to from
-head to tail. A scalor, or regular number, on the other hand just has a magnitude.
-A triplet of scalors, e.g. (1, 2, 3), can be interpreted as a point or vector, which
-both usually refered to as a "vector" in game development and computer graphics.
-
-####Unit and Normal Vectors
-The unit vectors are define to correspond to each directional axis with a length of 1.
-Vector **i** has the value (1, 0, 0); vector **j** has the value (0, 1, 0); and vector
-**k** has the value (0, 0, 1). All of these vectors point in the positive direction.
-
-Any point or vector can be expressed as a sum of scalors multiplied by each
-of the unit vectors. EX. **(5, 3, -2)** -> **5i + 3j -2k**.
-
-The normal vector of a vector is the component of each vector divided by the length
-of the vector. Each component should be less than or equal to 1. EX:
-
-* 'V' = (12, 32, 6)
-* vector length 'L' = sqrt(12^2, 32^2, 6^2)
-* normal 'Vn' = (12/L, 32/L, 6/L)
-
-**Use sqare magnitudes rather than square roots when possible**
+The simplest method is to explicitly define startup and shutdown methods for
+each singleton class and leave the constructor and destructor empty.
+Then in `main()`, startup and shutdown the subsystems in the desired order.
 
 
-####Vector Operations
+###Block Memory Allocation
+It is important to avoid costly calls to dynamic memory allocation as much as possible.
+Data that is located in small continous blocks allows the CPU to operate much
+more efficient than allocating memory scattered acrossed a range of memory addresses.
 
-* Scalor multiplication
-* Vector additional or subtraction
-* Vector multiplication (two types): dot and cross product
-* Vector projection
-* Dot product tests (collinear - test if same line as normal vectors)
-* Cross product
+The built-in functions `malloc() / new` and `free() / delete` are very slow
+because they are general purpose functions that require management overhead
+and requires context switching between user mode and kernel mode. One key
+rule of thumb:
 
-#####Dot Product
-Given two vectors **A** and **B**, (**A** . **B**) = (ax bx) + (ay by) + (az bz).
-Can also be written as: |**A**| |**B**| cos(theta), where theta is the angle between
-the two vectors.
+`keep heap allocations to a minimum, and never allocate dynamic memory in a loop`
 
-#####Applications of Dot Product
-Lots of applications. Test whether an enemy is behind or infront of the player.
-Find the height of a point above or below a plane: h = **v** . **n** = (**P** - **Q**) . n
+####Techniques to Allocate Memory Efficiently
+Use a **Stack-based allocator** by allocating a large continous block of memory
+using `malloc()`, maintain a pointer to the top of this stack, and everything
+below this pointer is considered to be in use. Use marker pointers to set
+points where the stack can roll back and freed to a previous point.
 
-#####Cross Product
-Yields a vector that is perpendicular to the two vectors being multiplied.
-**A** x **B** = [(ay bz - az by), (az bx - ax bz), (ax by - ay bx)]
+A more efficient technique is to use a **double-ended stack** where two pointers
+are used to keep track of the top and lower part of the stack. The bottom part
+of the stack can be used for level loading; the top of the stack can be
+used for more temporary memory that are allocated and freed with each frame.
 
-The magnitude of a cross product is |**A** x **B**| = |**A**| |**B**| sin(theta).
-It can be used to determine the area of the parallelogram for A and B.
-Direction is the direction of your thumb in right hand rule.
-
-
-####Linear Interpolation of Points and Vectors
-Linear interpolation is a mathematical operation that approximates
-the value of a unknown point in between neighboring points using a line.
-Spline interpolation is a technique used to interpolate points
-using a piece-wise polynomial, and can be used for curve fitting.
-
-
-###Matrices
-A matrix is a set of one or more vectors with a dimension of 'n' rows
-and 'm' columns. A square matrix is special type of matrix where
-the number of rows is the same as the number of columns. Matrices
-are widely used to store data and perform operations that manipulate
-that data, and are perfered by GPUs because matrices allow for efficient
-parrallel operations and computation.
-
-####Matrix Topics
-* scalor multiplication
-* matrix multiplication
-* row and column-wise order
-* the identity matrix
-* triangular and diagonal matrices
-* transposition and symmetry
-* inverse matrix and determinants
-* linear independence and combinations
-* matrix transformations
-* sparse matrices
-
-
-###Quaternions
-Quaternions are used for 3D rotations because round-off floating point
-error occurs when using a matrix for calculating rotations. Yaw, pitch,
-and roll are ways to think about the rotation of a 3D object.
-
-This area should be expanded.
-
-###Graphics Card SIMD
-Single Instruction Multiple Data allows parallel computation of a signle
-instruction with mutitple data. For example, this means your GPU can perform
-the four different add operations with different data sets simultaneously.
-
-Use SSE intrinsics, which is a API `#include <xmmintrin.h>` that lets you
-code in `c` rather using inline assembly.
-
-
-###Random Number Generator
-Algorithms used to generate pseudo random numbers.
-
-* Linear Congruential Generators
-* Mersenne Twister
-* Mother-Of-All
-* Xorshift
-
+A **pool allocator** works by allocating memory for matrices where the number
+of matrix elements is equaled to the number of bytes required.
