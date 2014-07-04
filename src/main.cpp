@@ -1,14 +1,17 @@
 /*!
  * Game Engine Architecture Demo
- * MIT License - 2014
+ * MIT License (c) 2014
  * codenameyau.github.io
  */
 
-#include <iostream>
-using namespace std;
+#include <cstdio>
+#include "lib/core.h"
+#include "lib/utils.h"
 
 int main(int argc, const char** argv) {
 
-  cout << argc;
+  int sum = 0;
+  sum = add(1, 2);
+  printf("Hello World %d\n", sum);
   return 0;
 }
