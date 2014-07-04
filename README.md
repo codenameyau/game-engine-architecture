@@ -23,6 +23,7 @@ provide APIs to abstract away many difficult or common low-level tasks.
 * Core Engine - FPS monitering, updates, rendering loop
 * Keyboard Input - Key codes, key press, key hold, key release
 * Mouse Input - Mouse codes, mouse click, mouse hold, mouse release
+* Resource Loader - Load external data (images, text)
 
 ####Mathematical Mechanics
 * Vector2 - length, dot product, normalize, rotate, operations
@@ -34,6 +35,8 @@ provide APIs to abstract away many difficult or common low-level tasks.
 * Functions - Clearing screen
 * Initialize Graphics - Geometry faces, auto gamma correction, z-depth
 * Components - Vertex, Triangle Face, and Mesh
-* Resource Loader - Load images and text data
+
+####Rendering Operations
 * Shaders and GLSL - Vertex and fragment shaders
 * Shader Variables - Uniform, varying, attribute
+* Transformation - translation, rotation, scale
