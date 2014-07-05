@@ -1,8 +1,8 @@
 game-engine-architecture
 ========================
 
-Learning how to design 3D game engines from the book
-*Game Engine Architecture* by Jason Gregory.
+Learning how to design 3D game engines from the book *Game Engine Architecture* by Jason Gregory and from
+[thebennybox's Java tutorials](https://www.youtube.com/playlist?list=PLEETnX-uPtBXP_B2yupUKlflXBznWIlL5).
 
 This repository contains updates and notes as I learn along and
 code my own examples. After each chapter, these notes will

@@ -6,6 +6,7 @@
  */
 
 #include <cstdio>
+#include <cstdlib>
 #include "core.h"
 
 namespace ENGINE_CORE {
@@ -23,16 +24,25 @@ namespace ENGINE_CORE {
 
   // Properties
 
-
   // Public Methods
   void MemoryManager::startUp() {
     printf("[+] Starting memory manager\n");
+    int length = 40;
+    int *p;
+
+    MemoryManager::topStack = malloc(length * sizeof(int));
+    for (p=MemoryManager::topStack; p<4000; p++) {
+      *p = 10;
+    }
   }
 
   void MemoryManager::shutDown() {
     printf("[-] Shutting down memory manager\n");
   }
 
+  void* alloc(int sizeBytes) {
+    return malloc(sizeBytes);
+  }
 
 /*************************
  * Core - Scene Renderer *

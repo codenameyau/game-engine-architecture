@@ -18,10 +18,17 @@ public:
   ~MemoryManager();
 
   // Properties
-  void startUp();
+  int MAX_MEMORY;
+  int *topStack;
+  int *bottomStack;
+
+  void *topMarker;
+  void *bottomMarker;
 
   // Methods
+  void startUp();
   void shutDown();
+  void* alloc(int sizeBytes);
 
 };
 
@@ -40,9 +47,9 @@ public:
   ~Renderer();
 
   // Properties
-  void startUp();
 
   // Methods
+  void startUp();
   void shutDown();
 
 };

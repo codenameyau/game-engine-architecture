@@ -18,6 +18,8 @@ int main(int argc, const char** argv) {
   gameMemory.startUp();
   gameRenderer.startUp();
 
+  printf("%p\n", gameMemory.topStack);
+  printf("%d\n", *gameMemory.topStack);
   // Shutdown game engine
   gameRenderer.shutDown();
   gameMemory.shutDown();
