@@ -10,8 +10,18 @@
 
 int main(int argc, const char** argv) {
 
-  int sum = 0;
-  sum = add(1, 2);
-  printf("Hello World %d\n", sum);
+  // Initialize core engine
+  ENGINE_CORE::MemoryManager gameMemory;
+  ENGINE_CORE::Renderer gameRenderer;
+
+  // Startup game engine
+  gameMemory.startUp();
+  gameRenderer.startUp();
+
+  // Shutdown game engine
+  gameRenderer.shutDown();
+  gameMemory.shutDown();
+
+
   return 0;
 }
